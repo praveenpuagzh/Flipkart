@@ -1,50 +1,89 @@
 package org.test;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
+
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class Flip {
+import io.github.bonigarcia.wdm.WebDriverManager;
 
-	public static void main(String[] args) {
-		System.setProperty("webdriver.chrome.driver", "E:\\ecclipseworkspace\\Maven\\driver\\chromedriver.exe");
-		WebDriver driver= new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("https://www.flipkart.com/");
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		driver.findElement(By.xpath("//button[@class='_2KpZ6l _2doB4z']")).click();
+
+public class Flip extends Base{
+	
+	
 		
-		WebElement search = driver.findElement(By.xpath("//input[@type='text']"));
-		search.sendKeys("poco");
-		driver.findElement(By.xpath("//button[@type=\"submit\"]")).click();
-		
-	List<WebElement> products = driver.findElements(By.xpath("//div[@class='_1AtVbE col-12-12']//div[@class='_13oc-S']//div[@class='_4rR01T']"));
-	List<WebElement> price = driver.findElements(By.xpath("//div[@class='_30jeq3 _1_WHN1']"));
-	
-	
-		 for(int i=0; i < products.size();i++){
-			
-			 String mobs = products.get(i).getText();
-			 System.out.println(mobs);
-		}
-		
-		for(int j=0;j<price.size();j++){
-			String cost = price.get(j).getText();
-			System.out.println(cost);
-			
-		}
-					
-	
-	
-	
+		@BeforeClass
+		public static void Initialzation() {
+			WebDriverManager.chromedriver().setup();
+			driver = new ChromeDriver();
+			driver.manage().window().maximize();
+			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 	}
-}
 
+		@Before
+		public void start() {
+
+			Date d = new Date();
+			
+			}
 		
+		@Test
+		public void Test1()  {
+			driver.get("https://www.flipkart.com/");
+			launchpage l = new launchpage();
+			click(l.button);
+			fillthetext(l.search, "poco");
+			click(l.submit);
+			run();
+			click(l.secpage);
+	}
+		@Test
+		public void Test2() throws Throwable {
+		Thread.sleep(5000);	
+		run();
+
+		}
+		
+		@Test
+		public void Test3() throws Throwable {
+			launchpage l = new launchpage();
+			click(l.thirdpage);
+			Thread.sleep(5000);
+			run();
+
+		}
 		
 	
+		@After
+		public void End() {
+
+			Date d = new Date();
+			
+		}
+
+		@AfterClass
+		public static void quit() {
+			// driver.quit();
+		}
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 
